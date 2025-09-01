@@ -1,8 +1,8 @@
 {
 	"SourceFiles": [
-		"C:\\Users\\user\\PhysicsStudy\\PhysicsProject\\Source\\PhysicsProject\\PhysicsProject.Build.cs",
-		"C:\\Users\\user\\PhysicsStudy\\PhysicsProject\\Source\\PhysicsProject.Target.cs",
-		"C:\\Users\\user\\PhysicsStudy\\PhysicsProject\\Source\\PhysicsProjectEditor.Target.cs"
+		"C:\\Users\\user\\PhysicsStudy\\Source\\PhysicsProject\\PhysicsProject.Build.cs",
+		"C:\\Users\\user\\PhysicsStudy\\Source\\PhysicsProject.Target.cs",
+		"C:\\Users\\user\\PhysicsStudy\\Source\\PhysicsProjectEditor.Target.cs"
 	],
 	"EngineVersion": "5.6.0"
 }
