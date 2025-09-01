@@ -1,9 +1,9 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
-#include "SpaceShip.h"
+#include "Spaceship.h"
 
 // Sets default values
-ASpaceShip::ASpaceShip()
+ASpaceship::ASpaceship()
 {
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -30,17 +30,17 @@ ASpaceShip::ASpaceShip()
 	ShipMesh->SetNotifyRigidBodyCollision(true);
 
 	// 플레이어 자동 빙의
-	AutoPossessPlayer = EAutoReceiveInput::Player0;
+	// AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
 // Called when the game starts or when spawned
-void ASpaceShip::BeginPlay()
+void ASpaceship::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
 // Called every frame
-void ASpaceShip::Tick(float DeltaTime)
+void ASpaceship::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
@@ -55,25 +55,25 @@ void ASpaceShip::Tick(float DeltaTime)
 }
 
 // Called to bind functionality to input
-void ASpaceShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void ASpaceship::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	
-	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ASpaceShip::Input_MoveForward);
-	PlayerInputComponent->BindAxis(TEXT("TurnRight"), this, &ASpaceShip::Input_TurnRight);
+	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ASpaceship::Input_MoveForward);
+	PlayerInputComponent->BindAxis(TEXT("TurnRight"), this, &ASpaceship::Input_TurnRight);
 }
 
-void ASpaceShip::Input_MoveForward(float Value)
+void ASpaceship::Input_MoveForward(float Value)
 {
 	CachedForwardInput = FMath::Clamp(Value, -1.f, 1.f);
 }
 
-void ASpaceShip::Input_TurnRight(float Value)
+void ASpaceship::Input_TurnRight(float Value)
 {
 	CachedTurnInput = FMath::Clamp(Value, -1.f, 1.f);
 }
 
-void ASpaceShip::ApplyAcceleration(float DeltaTime)
+void ASpaceship::ApplyAcceleration(float DeltaTime)
 {
 	// 추력 가속도를 더해 선속도 적분
 	if (FMath::IsNearlyZero(CachedForwardInput)) return;
@@ -93,7 +93,7 @@ void ASpaceShip::ApplyAcceleration(float DeltaTime)
 		CurrentVelocity.X, CurrentVelocity.Y, CurrentVelocity.Z);
 }
 
-void ASpaceShip::ApplyRotationWithInertia(float DeltaTime)
+void ASpaceship::ApplyRotationWithInertia(float DeltaTime)
 {
 	// 회전 입력이 있을 때 각속도에 가속도 적용
 	if (!FMath::IsNearlyZero(CachedTurnInput))
@@ -120,7 +120,7 @@ void ASpaceShip::ApplyRotationWithInertia(float DeltaTime)
 	}
 }
 
-void ASpaceShip::ApplyDamping()
+void ASpaceship::ApplyDamping()
 {
 	// 부드러운 선형 감속 (우주 공간의 미세한 저항)
 	// CurrentVelocity *= LinearDamping;
@@ -137,7 +137,7 @@ void ASpaceShip::ApplyDamping()
 	UE_LOG(LogTemp, Warning, TEXT("[Damp] |V|=%.2f"), CurrentVelocity.Size());
 }
 
-void ASpaceShip::ClampMaxSpeed()
+void ASpaceship::ClampMaxSpeed()
 {
 	const float Speed = CurrentVelocity.Length();
 	if (Speed > MaxSpeed)
@@ -146,7 +146,7 @@ void ASpaceShip::ClampMaxSpeed()
 	}
 }
 
-void ASpaceShip::MoveWithSweep(float DeltaTime)
+void ASpaceship::MoveWithSweep(float DeltaTime)
 {
 	if (CurrentVelocity.IsNearlyZero()) return;
 
@@ -160,7 +160,7 @@ void ASpaceShip::MoveWithSweep(float DeltaTime)
 	}
 }
 
-void ASpaceShip::ReflectVelocityByHit(const FHitResult& Hit)
+void ASpaceship::ReflectVelocityByHit(const FHitResult& Hit)
 {
 	FVector Nor = Hit.Normal.GetSafeNormal();
 
@@ -174,7 +174,7 @@ void ASpaceShip::ReflectVelocityByHit(const FHitResult& Hit)
 	AddActorWorldOffset(Nor * 5.f, false);
 }
 
-void ASpaceShip::ApplyLateralDamping(float DeltaTime)
+void ASpaceship::ApplyLateralDamping(float DeltaTime)
 {
 	// 속도를 앞방향 성분과 옆방향 성분으로 분해 후 옆방향 성분만 지수감쇠
 	if (CurrentVelocity.IsNearlyZero()) return;
@@ -193,7 +193,7 @@ void ASpaceShip::ApplyLateralDamping(float DeltaTime)
 	UE_LOG(LogTemp, Warning, TEXT("[LatDamp] |V|=%.2f"), CurrentVelocity.Size());
 }
 
-void ASpaceShip::SteerVelocityTowardsForward(float DeltaTime)
+void ASpaceship::SteerVelocityTowardsForward(float DeltaTime)
 {
 	// 속도의 방향만 일정 각속도로 앞방향에 맞춰 회전(속력 크기는 유지)
 	if (CurrentVelocity.IsNearlyZero() || VelocityTurnDegPerSec <= 0.f) return;

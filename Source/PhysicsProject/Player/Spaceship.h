@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "SpaceShip.generated.h"
+#include "Spaceship.generated.h"
 
 UCLASS()
-class PHYSICSPROJECT_API ASpaceShip : public APawn
+class PHYSICSPROJECT_API ASpaceship : public APawn
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this pawn's properties
-	ASpaceShip();
+	ASpaceship();
 
 protected:
 	// Called when the game starts or when spawned
@@ -40,7 +40,7 @@ protected:
 
 	// 물리 파라미터
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Physics")
-	float Acceleration = 2500.0f;
+	float Acceleration = 2500.0f; // 가속도
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Physics")
 	float MaxSpeed = 2000.0f;
@@ -78,5 +78,4 @@ protected:
 	void ReflectVelocityByHit(const FHitResult& Hit);
 	void ApplyLateralDamping(float DeltaTime);
 	void SteerVelocityTowardsForward(float DeltaTime);
-
 };
